@@ -1,0 +1,11 @@
+#read image name and create image
+read -p "enter image name:" img_name
+docker build --tag $img_name .
+
+#read container, host name from user and create container 
+read -p "enter container name" con_name
+read -p "enter hostname " host_name
+docker run -d --name $con_name --network=host --hostname $host_name --privileged -v /var/log/pxe:/var/log/pxe -v /dev/cdrom:/dev/cdrom $img_name
+docker exec -it $con_name /bin/bash
+#bash pxe_boot.sh
+ls
